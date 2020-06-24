@@ -1,9 +1,10 @@
 export default {
-    apiKey: "AIzaSyAD8GpWFKrymm79oMQKliuZOd-tE3GN8h4",
-    authDomain: "chronology-daed6.firebaseapp.com",
-    databaseURL: "https://chronology-daed6.firebaseio.com",
-    projectId: "chronology-daed6",
-    storageBucket: "chronology-daed6.appspot.com",
-    messagingSenderId: "840464015393",
-    appId: "1:840464015393:web:7191ce2f50"
+    apiKey: "AIzaSyBch0ErlmQ0DCu_ShF_v1gFqw72vKo_efc",
+    authDomain: "chronology-release.firebaseapp.com",
+    databaseURL: "https://chronology-release.firebaseio.com",
+    projectId: "chronology-release",
+    storageBucket: "chronology-release.appspot.com",
+    messagingSenderId: "857971261889",
+    appId: "1:857971261889:web:f7d86f922f34b08997ef40",
+    measurementId: "G-VXKSD5F37Y"
 }
