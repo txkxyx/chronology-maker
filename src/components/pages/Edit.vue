@@ -31,6 +31,7 @@
                 <q-separator inset="item" />
                 <q-timeline-entry class="q-mt-md" tag="h4" heading>{{career.year}}</q-timeline-entry>
                 <div class="text-center q-mb-md">
+                    <q-btn rounded color="secondary" icon="add_circle_outline" :label="career.year + 'に新しいイベントを追加する'" @click="clickAddYear(career.year)"/>
                     <q-btn rounded @click.prevent="deleteYear(career.year)" :label="career.year + '年を削除'" color="red" icon="highlight_off"/>
                 </div>
                 <li v-for="(event, e_index) in career.events" :key="e_index" class="q-timeline__entry q-timeline__entry--icon q-timeline__entry--right">
@@ -51,6 +52,7 @@
     </div>
 </template>
 <script>
+import firebase from "firebase"
 import db from "../../firebase/firebaseInit"
 import moment from "moment"
 import { sortCareers } from "../../common/chronologyFunctions"
@@ -79,11 +81,17 @@ export default {
         setupChronology(){
             // URLパラメータから年表IDを取得する
             const id = this.$route.params.id
-            // 年表テーブルから年表データを取得する
-            chronologyRef.doc(id).get().then((doc) => {
-                this.id = doc.id
-                this.title = doc.data().title
-                this.careers = doc.data().careers
+            firebase.auth().onAuthStateChanged(user => {
+                if(user && user.uid === id){
+                    // 年表テーブルから年表データを取得する
+                    chronologyRef.doc(id).get().then((doc) => {
+                        this.id = doc.id
+                        this.title = doc.data().title
+                        this.careers = doc.data().careers
+                    })
+                }else{
+                    this.$router.push("/")
+                }
             })
         },
         /**
@@ -132,6 +140,13 @@ export default {
                     }
                 }
             })
+        },
+        /**
+         * 「xx年にイベントを追加する」ボタンを押下した際
+         */
+        clickAddYear(year){
+            this.newDate = String(year)
+            this.showDialog=true
         },
         /**
          * イベントを追加する

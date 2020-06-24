@@ -8,6 +8,7 @@
                         <q-form @submit="signUp" class="q-gutter-md">
                             <span v-if="errorMessage !== ''">{{errorMessage}}</span>
                             <q-input class="q-mb-md" v-model="name" label="名前" type="text" />
+                            <q-input class="q-mb-md" v-model="aka" label="ニックネーム" type="text" />
                             <q-input class="q-mb-md" v-model="email" label="メールアドレス" type="email" />
                             <q-input class="q-mb-md" v-model="password" label="パスワード" type="password" />
                             <q-input class="q-mb-md" v-model="career" label="キャリアスタート" type="month" />
@@ -32,6 +33,7 @@ export default {
     data(){
         return{
             name: '',
+            aka: '',
             email: '',
             password: '',
             career: '',
@@ -57,6 +59,8 @@ export default {
                         const uid = user.uid
                         usersRef.doc(uid).set({
                             name: this.name,
+                            aka: this.aka,
+                            startAt: new Date(this.career).getFullYear()
                         }).then(() => {
                             // キャリアを開始したイベントを初期値として登録する
                             let events = [
@@ -74,7 +78,7 @@ export default {
                             ]
                             // 年表データを登録
                             chronologyRef.doc(uid).set({
-                                title: this.name + 'さんの年表',
+                                title: this.aka + 'さんの年表',
                                 careers: careers
                             }).then(() => {
                                 // メインコンポーネントに遷移

@@ -3,13 +3,15 @@
         <q-btn to="/" flat label="年表メーカー" />
         <q-space />
         <span v-if="isLogin">
-            {{getAuth.name}}さんでログイン
+            <q-btn :to="'/' + getAuth.id + '/view'" stretch flat :label="getAuth.name + 'さんの年表'"/>
             <q-btn :to="'/' + getAuth.id + '/edit'" stretch flat label="年表を編集"/>
             <q-btn @click="signOut" stretch flat label="ログアウト" />
-            <q-btn to="/auth/signup" stretch flat label="ユーザー登録" />
         </span>
         <span v-else>
             <q-btn to="/auth/signin" stretch flat label="ログイン" />
+        </span>
+        <span>
+            <q-btn to="/auth/signup" stretch flat label="ユーザー登録" />
         </span>
     </q-toolbar>
 </template>
