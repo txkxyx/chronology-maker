@@ -24,8 +24,8 @@
 </style>
 
 <script>
-// import firebase from 'firebase'
 import db from "../../firebase/firebaseInit"
+import { sortUsers } from "../../common/chronologyFunctions";
 
 export default {
   name: 'Main',
@@ -49,12 +49,8 @@ export default {
           ...doc.data()
         })
       })
+      sortUsers(this.users)
     })
-    // firebase.auth().onAuthStateChanged((user) => {
-    //     if(user){
-    //       this.$router.push("/" + user.uid + "/view")
-    //     }
-    // })
   },
   computed:{
     getYears(){
