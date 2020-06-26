@@ -12,6 +12,9 @@
                         <q-btn :to="'/' + getAuth.id + '/edit'" stretch flat label="年表を編集" icon="history_edu"/>
                     </q-item>
                     <q-item>
+                        <q-btn :to="'/auth/edit/' + getAuth.id" stretch flat label="ユーザーを編集" icon="account_circle"/>
+                    </q-item>
+                    <q-item>
                         <q-btn @click="signOut" stretch flat label="ログアウト" icon="exit_to_app"/>
                     </q-item>
                 </q-list>

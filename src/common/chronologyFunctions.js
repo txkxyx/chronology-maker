@@ -12,3 +12,11 @@ export function sortCareers(careers){
         return 0
     })
 }
+
+export function sortUsers(users){
+    users.sort(function(a, b){
+        if(a.startAt < b.startAt) return -1;
+        if(a.startAt > b.startAt) return 1;
+        return 0;
+    })
+}
