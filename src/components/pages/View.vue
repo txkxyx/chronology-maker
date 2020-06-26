@@ -7,7 +7,7 @@
         <div v-for="(career, c_index) in chronology.careers" :key="c_index">
             <li v-for="(event, e_index) in career.events" :key="e_index" class="q-timeline__entry q-timeline__entry--icon" :class="e_index % 2 === 0 ? 'q-timeline__entry--right' : 'q-timeline__entry--left'">
                 <div class="q-timeline__subtitle">
-                    <span>{{getDate(Number(event.date), 'YYYY-MM-DD')}}</span>
+                    <span style="font-size: 1.5em;">{{getDate(Number(event.date), 'YYYY-MM-DD')}}</span>
                 </div>
                 <div class="q-timeline__dot" :class="'text-' + getColor(c_index, e_index)">
                     <i aria-hidden="true" role="presentation" class="row items-center justify-center material-icons q-icon notranslate">arrow_drop_up</i>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </li>
-            <q-timeline-entry class="q-mb-md" tag="h5" heading>{{career.year}}</q-timeline-entry>
+            <q-timeline-entry class="q-mb-md" tag="h4" heading><strong>{{career.year}}</strong></q-timeline-entry>
         </div>
         </q-timeline>
     </div>
