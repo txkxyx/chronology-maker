@@ -30,8 +30,7 @@ let router = new Router({
         {
             path: '/:id/view',
             name: 'View',
-            component: View,
-            meta: { requiresAuth: true}
+            component: View
         },
         {
             path: '/:id/edit',
