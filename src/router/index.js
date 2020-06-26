@@ -28,11 +28,6 @@ let router = new Router({
             component: Signup
         },
         {
-            path: '/:id',
-            name: 'View',
-            component: View
-        },
-        {
             path: '/:id/view',
             name: 'View',
             component: View,
