@@ -1,17 +1,28 @@
 <template>
-    <q-toolbar class="bg-purple text-white shadow-2 ">
+    <q-toolbar class="bg-dark text-white shadow-2 ">
         <q-btn to="/" flat label="年表メーカー" />
         <q-space />
         <span v-if="isLogin">
-            <q-btn :to="'/' + getAuth.id + '/view'" stretch flat :label="getAuth.name + 'さんの年表'"/>
-            <q-btn :to="'/' + getAuth.id + '/edit'" stretch flat label="年表を編集"/>
-            <q-btn @click="signOut" stretch flat label="ログアウト" />
+            <q-btn-dropdown stretch flat label="Menu">
+                <q-list>
+                    <q-item>
+                        <q-btn :to="'/' + getAuth.id + '/view'" stretch flat :label="getAuth.name + 'さんの年表'" icon="assignment_ind"/>
+                    </q-item>
+                    <q-item>
+                        <q-btn :to="'/' + getAuth.id + '/edit'" stretch flat label="年表を編集" icon="history_edu"/>
+                    </q-item>
+                    <q-item>
+                        <q-btn @click="signOut" stretch flat label="ログアウト" icon="exit_to_app"/>
+                    </q-item>
+                </q-list>
+            </q-btn-dropdown>
+            
         </span>
         <span v-else>
-            <q-btn to="/auth/signin" stretch flat label="ログイン" />
+            <q-btn to="/auth/signin" stretch flat label="ログイン" icon="login"/>
         </span>
         <span>
-            <q-btn to="/auth/signup" stretch flat label="ユーザー登録" />
+            <q-btn to="/auth/signup" stretch flat label="ユーザー登録" icon="perm_identity"/>
         </span>
     </q-toolbar>
 </template>

@@ -4,13 +4,14 @@
         <q-page>
           <div class="row justify-center">
             <div class="col-md-auto text-center">
-              <h3 class="">さあ未来を描こう</h3>
-              <q-btn to="/auth/signup" fixed-center type="submit" color="primary" label="ユーザー登録" />
+              <h3 class=""><strong>さあ未来を描こう</strong></h3>
+              <q-btn v-if="!isLogin" to="/auth/signup" fixed-center type="submit" color="primary" label="ユーザー登録" icon="perm_identity"/>
               <h4>年表一覧</h4>
-              <q-list class="q-mt-md" bordered spector >
-                <q-item @click="onClickLink(user.id)" clickable v-ripple v-for="user in users" :key="user.id">
+              <q-list class="q-mt-md" spector v-for="user in users" :key="user.id">
+                <q-item @click="onClickLink(user.id)" clickable v-ripple >
                   <q-item-section>エンジニア歴{{getYears(user.startAt)}}年の{{user.aka}}さんの年表</q-item-section>
                 </q-item>
+                <q-separator spaced inset />
               </q-list>
             </div>
           </div>
@@ -60,7 +61,13 @@ export default {
       return function(year){
         return new Date().getFullYear() - year + 1
       }
+    },
+    /**
+     * ストアからログイン状態を取得
+     */
+    isLogin(){
+        return this.$store.getters.status
     }
-  }
+  },
 }
 </script>
