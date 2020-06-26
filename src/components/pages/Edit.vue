@@ -3,14 +3,14 @@
         <q-btn rounded class="fixed-bottom-right q-mb-xl q-mr-xl z-top" style="font-size: 1.2rem;" @click.prevent="editChrology" label="変更を適用する" color="primary" icon="send"/>
         <div class="row justify-center">
             <div class="col-6 text-center" >
-                <!-- TODO エラーメッセージのスタイル -->
-                <h4 class="q-field--error" v-if="errorMessage != ''">{{errorMessage}}</h4>
+                <p class="text-negative" v-if="errorMessage != ''">{{errorMessage}}</p>
                 <q-input class="q-mb-md" v-model="title" label="年表タイトル" type="text"/>
                 <q-btn rounded color="secondary" icon="add_circle_outline" label="新しいイベントを追加する" @click="showDialog=true"/>
                 <q-dialog v-model="showDialog" persistent>
                     <q-card style="width: 700px; max-width: 80vw;">
                         <q-card-section>
                             <div class="text-h6">新しいイベントを追加する</div>
+                            <p class="text-negative" v-if="dialogErrorMessage != ''">{{dialogErrorMessage}}</p>
                         </q-card-section>
                         <q-card-section class="a-pt-none">
                             <q-input class="q-mb-md" v-model="newDate" label="日付" type="date" filled/>
@@ -19,7 +19,7 @@
                         </q-card-section>
                         <q-card-actions>
                             <q-btn flat @click.prevent="addEvent" label="追加する" color="primary"/>
-                            <q-btn flat @click.prevent="showDialog=false" label="キャンセル" color="primary"/>
+                            <q-btn flat @click.prevent="clickCancel" label="キャンセル" color="primary"/>
                         </q-card-actions>
                     </q-card>
                 </q-dialog>
@@ -31,8 +31,8 @@
                 <q-separator inset="item" />
                 <q-timeline-entry class="q-mt-md" tag="h4" heading>{{career.year}}</q-timeline-entry>
                 <div class="text-center q-mb-md">
-                    <q-btn rounded color="secondary" icon="add_circle_outline" :label="career.year + 'に新しいイベントを追加する'" @click="clickAddYear(career.year)"/>
-                    <q-btn rounded @click.prevent="deleteYear(career.year)" :label="career.year + '年を削除'" color="red" icon="highlight_off"/>
+                    <q-btn class="q-mr-md" rounded color="secondary" icon="add_circle_outline" :label="career.year + '年にイベントを追加'" @click="clickAddYear(career.year)"/>
+                    <q-btn class="q-ml-md" rounded @click.prevent="deleteYear(career.year)" :label="career.year + '年を削除'" color="red" icon="highlight_off"/>
                 </div>
                 <li v-for="(event, e_index) in career.events" :key="e_index" class="q-timeline__entry q-timeline__entry--icon q-timeline__entry--right">
                     <div class="q-timeline__subtitle">
@@ -71,7 +71,8 @@ export default {
             newTitle: "",
             newEvent: "",
             careers: [],
-            errorMessage: ""
+            errorMessage: "",
+            dialogErrorMessage: ""
         }
     },
     methods:{
@@ -145,7 +146,7 @@ export default {
          * 「xx年にイベントを追加する」ボタンを押下した際
          */
         clickAddYear(year){
-            this.newDate = String(year)
+            this.newDate = year + "-04-01"
             this.showDialog=true
         },
         /**
@@ -174,11 +175,17 @@ export default {
                     career.events.some(event => {
                         if(event.date === newDate){
                             // 選択した日付がすでに存在する場合、イベントを追加しない
-                            // TODO ダイアログのエラーメッセージに出力する
-                            this.errorMessage = "すでに日付が存在します"
+                            this.dialogErrorMessage = "すでに日付が存在します"
                         }else{
                             // イベントを追加
                             career.events.push(newEvent)
+                            // ダイアログを非表示、エラーメッセージを初期化
+                            this.showDialog = false
+                            this.dialogErrorMessage = ""
+                            // 入力フォームを初期化
+                            this.newYear = ""
+                            this.newTitle = ""
+                            this.newEvent = ""
                         }
                         return true
                     })
@@ -192,16 +199,23 @@ export default {
                     year: year,
                     events:[newEvent]
                 })
+                // ダイアログを非表示、エラーメッセージを初期化
+                this.showDialog = false
+                this.dialogErrorMessage = ""
+                // 入力フォームを初期化
+                this.newYear = ""
+                this.newTitle = ""
+                this.newEvent = ""
             }
             // キャリアをソート
             sortCareers(this.careers)
-            // ダイアログを非表示、エラーメッセージを初期化
+        },
+        /**
+         * キャンセルボタンを押下したとき、ダイアログのメッセージを空にしダイアログを閉じる
+         */
+        clickCancel(){
+            this.dialogErrorMessage = ""
             this.showDialog = false
-            this.errorMessage = ""
-            // 入力フォームを初期化
-            this.newYear = ""
-            this.newTitle = ""
-            this.newEvent = ""
         },
         /**
          * 選択した年のイベントを全て削除する
