@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </li>
-            <q-timeline-entry class="q-mb-md" tag="h4" heading><strong>{{career.year}}</strong></q-timeline-entry>
+            <q-timeline-entry class="q-mb-md" tag="h4" heading><strong>{{career.year}}</strong><small class="text-body1">{{getHistoryYear(career.year)}}</small></q-timeline-entry>
         </div>
         </q-timeline>
     </div>
@@ -36,7 +36,8 @@ export default {
     name: "View",
     data(){
     return{
-        chronology: null
+        chronology: null,
+        startAt: 0
         }
     },
     methods:{
@@ -44,7 +45,12 @@ export default {
             const uid = this.$route.params.id
             db.collection("chronology").doc(uid).get().then((doc) => {
                 if(doc.data()){
-                this.chronology = doc.data()
+                    this.chronology = doc.data()
+                }
+            })
+            db.collection("users").doc(uid).get().then((doc) => {
+                if(doc.data()){
+                    this.startAt = doc.data().startAt
                 }
             })
         },
@@ -78,6 +84,16 @@ export default {
         getColor(){
             return function(c_index, e_index){
                 return colorPalet[c_index % 10][e_index % 10]
+            }
+        },
+        getHistoryYear(){
+            return function(year){
+                const historyYear = Number(year) - Number(this.startAt) + 1
+                console.log(this.historyYear)
+                if(historyYear >0){
+                    return "（" + historyYear + "年目）"
+                }
+                return ""
             }
         }
     }
