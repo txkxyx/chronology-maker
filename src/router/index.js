@@ -7,6 +7,7 @@ import Signup from '@/components/pages/Signup'
 import View from '@/components/pages/View'
 import Edit from '@/components/pages/Edit'
 import UserEdit from '@/components/pages/UserEdit'
+import PasswordEdit from '@/components/pages/PasswordEdit'
 
 Vue.use(Router);
 
@@ -43,6 +44,12 @@ let router = new Router({
             path: '/auth/edit/:id',
             name: 'UserEdit',
             component: UserEdit,
+            meta: { requiresAuth: true}
+        },
+        {
+            path: '/auth/password/edit/:id',
+            name: 'PasswordEdit',
+            component: PasswordEdit,
             meta: { requiresAuth: true}
         }
     ]
