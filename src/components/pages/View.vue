@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </li>
-            <q-timeline-entry class="q-mb-md" tag="h4" heading><strong>{{career.year}}</strong><small class="text-body1">{{getHistoryYear(career.year)}}</small></q-timeline-entry>
+            <q-timeline-entry :id="career.year === new Date().getFullYear() ? 'thisYear' : ''" class="q-mb-md" tag="h4" heading><strong>{{career.year}}</strong><small class="text-body1">{{getHistoryYear(career.year)}}</small></q-timeline-entry>
         </div>
         </q-timeline>
     </div>
@@ -61,7 +61,7 @@ export default {
                     return hljs.highlightAuto(code, [lang]).value
                 }
             })
-        }
+        },
     },
     created(){
         this.getChronology()
@@ -89,7 +89,6 @@ export default {
         getHistoryYear(){
             return function(year){
                 const historyYear = Number(year) - Number(this.startAt) + 1
-                console.log(this.historyYear)
                 if(historyYear >0){
                     return "（" + historyYear + "年目）"
                 }
