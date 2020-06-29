@@ -15,7 +15,11 @@
                         <q-card-section class="a-pt-none">
                             <q-input class="q-mb-md" v-model="newDate" label="日付" type="date" filled/>
                             <q-input class="q-mb-md" v-model="newTitle" label="タイトル" type="text" filled/>
-                            <q-input class="q-mb-md" v-model="newEvent" label="イベント" type="textarea" filled/>
+                            <q-input class="q-mb-md" v-model="newEvent" label="イベント" type="textarea" filled bottom-slots>
+                                <template v-slot:hint>
+                                    イベントはMarkdown形式で記入できます。
+                                </template>
+                            </q-input>
                         </q-card-section>
                         <q-card-actions>
                             <q-btn flat @click.prevent="addEvent" label="追加する" color="primary"/>
@@ -43,7 +47,11 @@
                     </div>
                     <div class="q-timeline__content">
                         <q-input class="q-mb-md" v-model="event.title" label="タイトル" type="text" filled/>
-                        <q-input class="q-mb-md" v-model="event.event" label="イベント" type="textarea" filled/>
+                        <q-input class="q-mb-md" v-model="event.event" label="イベント" type="textarea" filled bottom-slots="">
+                            <template v-slot:hint>
+                                イベントはMarkdown形式で入力できます
+                            </template>
+                        </q-input>
                         <q-btn rounded class="q-mb-md" @click.prevent="deleteEvent(career.year,Number(event.date))" label="削除" color="red" icon="highlight_off"/>
                     </div>
                 </li>
